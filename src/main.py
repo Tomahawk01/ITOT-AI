@@ -55,8 +55,8 @@ def main(image_path):
     renderer = GlyphRenderer()
     SAMPLE_HEIGHT = int(SAMPLE_WIDTH / renderer.char_aspect())
 
-    img = Image.open(image_path).convert(mode='L')
-    img = np.array(img)
+    img_pil = Image.open(image_path).convert(mode='L')
+    img = np.array(img_pil)
 
     output_img = np.zeros((
         int(img.shape[0] / SAMPLE_HEIGHT * renderer.row_height()),
@@ -81,15 +81,16 @@ def main(image_path):
             rendered = renderer.render_char(CHAR_LOOKUP[char_idx])
             output_y_end = cursor_y + rendered.bitmap.shape[0]
             output_x_end = cursor_x + rendered.bitmap.shape[1]
-            try:
-                output_img[cursor_y : output_y_end, cursor_x : output_x_end] = rendered.bitmap
-            except:
-                pass
+            output_img[cursor_y : output_y_end, cursor_x : output_x_end] = rendered.bitmap
             cursor_x += int(rendered.advance)
 
         cursor_x = 0
         cursor_y += int(renderer.row_height())
-        
+
+    img_resized = img_pil.resize((output_img.shape[1], output_img.shape[0]))
+    img_resized.save("resized.png")
+    Image.fromarray(np.array(img_resized) - output_img).save("diff.png")
+
     Image.fromarray(output_img).save("test.png")
 
 if __name__ == "__main__":
