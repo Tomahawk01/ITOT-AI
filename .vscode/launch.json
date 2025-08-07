@@ -11,6 +11,13 @@
                 "${workspaceFolder}/sample.png"
             ],
             "console": "integratedTerminal"
+        },
+        {
+            "name": "Run Training",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/train.py",
+            "console": "integratedTerminal"
         }
     ]
 }
