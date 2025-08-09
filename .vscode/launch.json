@@ -17,6 +17,10 @@
             "type": "debugpy",
             "request": "launch",
             "program": "${workspaceFolder}/src/train.py",
+            "args": [
+                "--image-path",
+                "${workspaceFolder}/sample.png"
+            ],
             "console": "integratedTerminal"
         }
     ]

@@ -47,9 +47,12 @@ class GlyphRenderer:
     
     def row_height(self):
         return freetype.FT_MulFix(self.face.units_per_EM, self.face.size.y_scale) / 64.0
+    
+    def char_width(self):
+        return self.render_char('@').advance
 
     def char_aspect(self):
-        return self.render_char('@').advance / self.row_height()
+        return self.char_width() / self.row_height()
 
 def main(image_path):
     renderer = GlyphRenderer()
